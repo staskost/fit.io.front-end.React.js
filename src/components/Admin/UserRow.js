@@ -12,7 +12,7 @@ class UserRow extends Component {
         if (window.confirm("Are you sure you want to Ban " + this.state.user.username + " ?")) {
             $.ajax({
                 type: "POST",
-                url: `http://localhost:8080/find/bann-user/${this.state.user.id}`,
+                url: `http://localhost:8080/admin/bann-user/${this.state.user.id}`,
                 headers: { "X-MSG-AUTH": localStorage.getItem("token") },
                 async: true,
                 success: () => {
@@ -32,7 +32,7 @@ class UserRow extends Component {
         if (window.confirm("Are you sure you want to Unban " + this.state.user.username + " ?")) {
             $.ajax({
                 type: "POST",
-                url: `http://localhost:8080/find/unbann-user/${this.state.user.id}`,
+                url: `http://localhost:8080/admin/unbann-user/${this.state.user.id}`,
                 headers: { "X-MSG-AUTH": localStorage.getItem("token") },
                 async: true,
                 success: () => {

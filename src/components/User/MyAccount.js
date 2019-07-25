@@ -84,7 +84,7 @@ class MyAccount extends Component {
     handleSaveDescription(event) {
         const newDescription = this.inputDescription.current.value;
         if ((newDescription !== "") && (newDescription !== this.context.userInfo.price)) {
-            const url = 'http://localhost:8080/find/set-description/';
+            const url = 'http://localhost:8080/trainers/set-description/';
 
             fetch(url, {
                 method: 'POST',

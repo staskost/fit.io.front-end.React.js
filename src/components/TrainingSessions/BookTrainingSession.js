@@ -27,7 +27,7 @@ class BookTrainingSession extends Component {
   getUser = trainersId => {
     $.ajax({
       type: "GET",
-      url: `http://localhost:8080/find/getUser/${trainersId}`,
+      url: `http://localhost:8080/users/getUser/${trainersId}`,
       dataType: "json",
       async: true,
       success: trainer => {

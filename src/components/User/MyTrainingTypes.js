@@ -103,7 +103,7 @@ class MyTrainingTypes extends Component {
         // Check that input training area isn't already among trainer's areas
         // Only then we make ajax call, else no action is needed
         if ((areaId !== "") && !trainersAreasIdsOnlyList.includes(areaId)) {
-            const url = 'http://localhost:8080/find/trainer-choose-area/' + areaId;
+            const url = 'http://localhost:8080/trainers/trainer-choose-area/' + areaId;
 
             fetch(url, {
                 method: 'POST',
@@ -119,7 +119,7 @@ class MyTrainingTypes extends Component {
     }
 
     handleRemoveTrainersArea(areaId) {
-        const url = 'http://localhost:8080/find/trainer-remove-area/' + areaId;
+        const url = 'http://localhost:8080/trainers/trainer-remove-area/' + areaId;
 
         fetch(url, {
             method: 'POST',
@@ -170,7 +170,7 @@ class MyTrainingTypes extends Component {
     handleUpdateCost() {
         const newCost = this.inputPrice.current.value;
         if ((newCost !== "") && (newCost !== this.context.userInfo.price)) {
-            const url = 'http://localhost:8080/find/set-price/' + this.inputPrice.current.value;
+            const url = 'http://localhost:8080/trainers/set-price/' + this.inputPrice.current.value;
 
             fetch(url, {
                 method: 'POST',
@@ -195,7 +195,7 @@ class MyTrainingTypes extends Component {
         const trainersTypesIdsOnlyList = this.state.trainersTrainingTypes.map((tr, i) => { return tr.id });
 
         if ((trId !== "") && !trainersTypesIdsOnlyList.includes(trId)) {
-            const url = 'http://localhost:8080/find/trainer-choose-type/' + trId;
+            const url = 'http://localhost:8080/trainers/trainer-choose-type/' + trId;
 
             fetch(url, {
                 method: 'POST',
@@ -211,7 +211,7 @@ class MyTrainingTypes extends Component {
     }
 
     handleRemoveTrainingType(trainingTypeId) {
-        const url = 'http://localhost:8080/find/trainer-remove-type/' + trainingTypeId;
+        const url = 'http://localhost:8080/trainers/trainer-remove-type/' + trainingTypeId;
 
         fetch(url, {
             method: 'POST',

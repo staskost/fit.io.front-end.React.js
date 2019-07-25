@@ -26,7 +26,7 @@ class AllUsers extends Component {
             })
             $.ajax({
                 type: "GET",
-                url: `http://localhost:8080/find/all?start=0&size=10`,
+                url: `http://localhost:8080/admin/all?start=0&size=10`,
                 headers: { "X-MSG-AUTH": localStorage.getItem("token") },
                 dataType: "json",
                 async: true,
@@ -74,7 +74,7 @@ class AllUsers extends Component {
             $.ajax({
                 type: "GET",
                 contentType: "application/json; charset=utf-8",
-                url: `http://localhost:8080/find/all?start=${start}&size=10`,
+                url: `http://localhost:8080/admin/all?start=${start}&size=10`,
                 headers: {
                     "X-MSG-AUTH": token
                 },

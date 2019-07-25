@@ -46,7 +46,7 @@ export class TrainersCalendar extends Component {
   getUser = id => {
     $.ajax({
       type: "GET",
-      url: `http://localhost:8080/find/getUser/${id}`,
+      url: `http://localhost:8080/users/getUser/${id}`,
       dataType: "json",
       async: true,
       success: user => {

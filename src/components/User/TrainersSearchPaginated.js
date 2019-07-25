@@ -114,19 +114,19 @@ class TrainersSearch extends Component {
             if (this.inputArea.current.value !== "" ) {
                 if( this.inputPrice.current.value === ""){
                     let inputAreaId = this.validateInputArea();
-                    this.fetchUrl = "http://localhost:8080/find/trainers-area/" + inputAreaId;
+                    this.fetchUrl = "http://localhost:8080/users/trainers-area/" + inputAreaId;
                 }
             } else if (this.inputArea.current.value === ""){
                 if( this.inputPrice.current.value !== ""){
-                this.fetchUrl = this.fetchUrl = "http://localhost:8080/find/byPrice/" + this.inputPrice.current.value;
+                this.fetchUrl = this.fetchUrl = "http://localhost:8080/users/byPrice/" + this.inputPrice.current.value;
                 }
-            } else this.fetchUrl = "http://localhost:8080/find/all-trainers/2"; // get all trainers url - both type and area are empty
+            } else this.fetchUrl = "http://localhost:8080/users/all-trainers/2"; // get all trainers url - both type and area are empty
         } else if (this.inputArea.current.value === "") {
-            this.fetchUrl = "http://localhost:8080/find/trainer-type/" + this.inputTrainingType.current.value;
+            this.fetchUrl = "http://localhost:8080/users/trainer-type/" + this.inputTrainingType.current.value;
         } else {
             let inputAreaId = this.validateInputArea();
             if (inputAreaId !== -1) {
-                this.fetchUrl = "http://localhost:8080/find/trainer/" + this.inputTrainingType.current.value + "/" + inputAreaId+ "/" + this.inputPrice.current.value;
+                this.fetchUrl = "http://localhost:8080/users/trainer/" + this.inputTrainingType.current.value + "/" + inputAreaId+ "/" + this.inputPrice.current.value;
             }
         }
 

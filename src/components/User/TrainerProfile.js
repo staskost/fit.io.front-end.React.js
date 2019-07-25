@@ -50,7 +50,7 @@ class TrainerProfile extends Component {
     }
 
     fetchTrainer() {
-        const url = 'http://localhost:8080/find/getUser/' + this.trainerId;
+        const url = 'http://localhost:8080/users/getUser/' + this.trainerId;
 
         fetch(url, {
             method: 'GET',
