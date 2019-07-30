@@ -53,7 +53,7 @@ class AvailableActionsButtons extends Component {
             console.log('sessionIsReviewed Response status:', response.status);
             console.log('Response', response);
             try {
-                response.json().then(data => {
+                ((response)=>response.json()).then((data) => {
                     console.log('Training session has already been reviewed');
                     console.log('Review Data returned:', data);
                     this.setState({ reviewed: true, review: data });

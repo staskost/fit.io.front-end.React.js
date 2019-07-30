@@ -33,14 +33,11 @@ class TrainingSessions extends Component {
 
     componentDidMount() {
         console.log('TrainingSessions component did mount');
-
-        // Making this element
         console.log('User Role: ', this.context.userInfo.role.name);
         if (this.context.userInfo.role.name === Role.User) {
             this.fetchTrainingSessionsUrl = 'http://localhost:8080/session/client-sessions';
-        // } else if ((this.context.userInfo.role.name === Role.Trainer) && (this.props.folderType === 'CANCELLED')) {
         } else if (this.props.folderType === 'CANCELLED') {
-            this.fetchTrainingSessionsUrl = 'http://localhost:8080/session/canceled-sessions';
+                this.fetchTrainingSessionsUrl = 'http://localhost:8080/session/canceled-sessions';
         } else if (this.context.userInfo.role.name === Role.Trainer) {
             this.fetchTrainingSessionsUrl = 'http://localhost:8080/session/trainer-sessions';
         } else console.error('Invalid role for training session:', this.context.userInfo.role.name);
@@ -91,11 +88,11 @@ class TrainingSessions extends Component {
                             <li>
                                 <span className="col-1"> </span>
                             </li>
-                            {/* {this.context.userInfo.role.name === Role.Trainer && ( */}
+                            {this.context.userInfo.role.name === Role.Trainer && (
                                 <li>
                                     <ButtonLink label="CANCELLED" to="/training-sessions/cancelled" location={this.props.location.pathname} />
-                                </li>
-                            {/* )} */}
+                                </li>)
+                            }
                         </ul>
                     </div>
                 </nav>
