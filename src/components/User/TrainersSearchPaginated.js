@@ -109,26 +109,44 @@ class TrainersSearch extends Component {
     // depending on input values we build the respective url for ajax call
     // search by area only, training type only, or by area and type
     handleSearch(event) {
-        console.log(this.inputPrice.current.value);
-        if (this.inputTrainingType.current.value === "" ) {
-            if (this.inputArea.current.value !== "" ) {
-                if( this.inputPrice.current.value === ""){
-                    let inputAreaId = this.validateInputArea();
-                    this.fetchUrl = "http://localhost:8080/users/trainers-area/" + inputAreaId;
+        if (this.inputTrainingType.current.value === "") {
+            if (this.inputArea.current.value !== "") {
+                let inputAreaId = this.validateInputArea();
+                if (inputAreaId !== -1) {
+                    this.fetchUrl = "http://localhost:8080/find/trainers-area/" + inputAreaId;
                 }
-            } else if (this.inputArea.current.value === ""){
-                if( this.inputPrice.current.value !== ""){
-                this.fetchUrl = this.fetchUrl = "http://localhost:8080/users/byPrice/" + this.inputPrice.current.value;
-                }
-            } else this.fetchUrl = "http://localhost:8080/users/all-trainers/2"; // get all trainers url - both type and area are empty
+            } else this.fetchUrl = "http://localhost:8080/find/all-trainers/2"; // get all trainers url - both type and area are empty
         } else if (this.inputArea.current.value === "") {
-            this.fetchUrl = "http://localhost:8080/users/trainer-type/" + this.inputTrainingType.current.value;
+            this.fetchUrl = "http://localhost:8080/find/trainer-type/" + this.inputTrainingType.current.value;
         } else {
             let inputAreaId = this.validateInputArea();
             if (inputAreaId !== -1) {
-                this.fetchUrl = "http://localhost:8080/users/trainer/" + this.inputTrainingType.current.value + "/" + inputAreaId+ "/" + this.inputPrice.current.value;
+                this.fetchUrl = "http://localhost:8080/find/trainer/" + this.inputTrainingType.current.value + "/" + inputAreaId;
             }
         }
+
+    //not working for now
+    // handleSearch(event) {
+    //     console.log(this.inputPrice.current.value);
+    //     if (this.inputTrainingType.current.value === "" ) {
+    //         if (this.inputArea.current.value !== "" ) {
+    //             if( this.inputPrice.current.value === ""){
+    //                 let inputAreaId = this.validateInputArea();
+    //                 this.fetchUrl = "http://localhost:8080/users/trainers-area/" + inputAreaId;
+    //             }
+    //         } else if (this.inputArea.current.value === ""){
+    //             if( this.inputPrice.current.value !== ""){
+    //             this.fetchUrl = this.fetchUrl = "http://localhost:8080/users/byPrice/" + this.inputPrice.current.value;
+    //             }
+    //         } else this.fetchUrl = "http://localhost:8080/users/all-trainers/2"; // get all trainers url - both type and area are empty
+    //     } else if (this.inputArea.current.value === "") {
+    //         this.fetchUrl = "http://localhost:8080/users/trainer-type/" + this.inputTrainingType.current.value;
+    //     } else {
+    //         let inputAreaId = this.validateInputArea();
+    //         if (inputAreaId !== -1) {
+    //             this.fetchUrl = "http://localhost:8080/users/trainer/" + this.inputTrainingType.current.value + "/" + inputAreaId+ "/" + this.inputPrice.current.value;
+    //         }
+    //     }
 
         // We go ahead with the ajax call only if validation above has produced a valid url
         // We make sure to reset current page to the first one (reset leftover from a previous search)
@@ -205,7 +223,7 @@ class TrainersSearch extends Component {
                                 return <option key={index} value={trainingType.id}>{trainingType.title}</option>
                             })}
                         </select>
-                        <input className="custom-select custom-select-lg form-control form-control-lg mr-0 col-sm-5" placeholder=" Filter by price" ref={this.inputPrice}></input>
+                        {/* not working for now <input className="custom-select custom-select-lg form-control form-control-lg mr-0 col-sm-5" placeholder=" Filter by price" ref={this.inputPrice}></input> */}
                         <button className="btn btn-primary btn-lg col-sm-2" type="submit">Search</button>
                     </form>
                 </div>
