@@ -15,10 +15,7 @@ function SearchResults(props) {
     }
 }
 
-/**
- * Our trainers search component
- * Usese pagination components
- */
+
 class TrainersSearch extends Component {
 
     constructor(props) {
@@ -35,7 +32,7 @@ class TrainersSearch extends Component {
             resultsPerPage: this.itemsPerPageOptions[0],
             numberOfTotalPages: 0,
             numberOfTotalResults: 0,
-            noResults: false    // we don't want to display relative message when component first loads
+            noResults: false   
         };
         this.fetchAreas = this.fetchAreas.bind(this);
         this.fetchTrainingTypes = this.fetchTrainingTypes.bind(this);
@@ -47,32 +44,27 @@ class TrainersSearch extends Component {
         this.fetchUrl = '';
     }
 
-    // We get areas and trainingTypes from db to populate our state and our datalists
-    // The user choices will be validated against our
+
     componentDidMount() {
         this.fetchAreas();
         this.fetchTrainingTypes();
     }
 
-    // handle passed to PaginationFooter child
     setActivePage(newActivePage) {
         this.setState({
-            currentPage: newActivePage - 1,     // we have to subtract 1. Our backend 1st page index is 0 for search results
+            currentPage: newActivePage - 1,     
         }, () => this.fetchPageResults());
-        // setState is asynchronous
-        // We had to update messages with callback to make sure they get updated AFTER the value of the current page has been set
+
     }
 
-    // handle passed to PaginationHeader child
+
     setResultsPerPage(option) {
-        // we also reset the currentPage to the first one after each update
         this.setState({
             currentPage: 0,
             resultsPerPage: option
         }, () => this.fetchPageResults());
     }
 
-    // fetches all areas from db to populate our datalist (initialization method)
     fetchAreas() {
         const url = 'http://localhost:8080/areas/all';
 
@@ -89,7 +81,6 @@ class TrainersSearch extends Component {
         }).catch(error => console.error('Error:', error));
     }
 
-    // fetches all training types from db (initialization method)
     fetchTrainingTypes() {
         const url = 'http://localhost:8080/types/all';
 
@@ -106,22 +97,20 @@ class TrainersSearch extends Component {
         }).catch(error => console.error('Error:', error));
     }
 
-    // depending on input values we build the respective url for ajax call
-    // search by area only, training type only, or by area and type
     handleSearch(event) {
         if (this.inputTrainingType.current.value === "") {
             if (this.inputArea.current.value !== "") {
                 let inputAreaId = this.validateInputArea();
                 if (inputAreaId !== -1) {
-                    this.fetchUrl = "http://localhost:8080/find/trainers-area/" + inputAreaId;
+                    this.fetchUrl = "http://localhost:8080/users/trainers-area/" + inputAreaId;
                 }
-            } else this.fetchUrl = "http://localhost:8080/find/all-trainers/2"; // get all trainers url - both type and area are empty
+            } else this.fetchUrl = "http://localhost:8080/users/all-trainers/2"; 
         } else if (this.inputArea.current.value === "") {
-            this.fetchUrl = "http://localhost:8080/find/trainer-type/" + this.inputTrainingType.current.value;
+            this.fetchUrl = "http://localhost:8080/users/trainer-type/" + this.inputTrainingType.current.value;
         } else {
             let inputAreaId = this.validateInputArea();
             if (inputAreaId !== -1) {
-                this.fetchUrl = "http://localhost:8080/find/trainer/" + this.inputTrainingType.current.value + "/" + inputAreaId;
+                this.fetchUrl = "http://localhost:8080/users/trainer/" + this.inputTrainingType.current.value + "/" + inputAreaId;
             }
         }
 
@@ -148,19 +137,16 @@ class TrainersSearch extends Component {
     //         }
     //     }
 
-        // We go ahead with the ajax call only if validation above has produced a valid url
-        // We make sure to reset current page to the first one (reset leftover from a previous search)
+  
         if (this.fetchUrl) {
             this.setState({
                 currentPage: 0
             }, () => this.fetchPageResults());
         }
-        // else handle respective notification prompt/alert
         event.preventDefault();
     }
 
     fetchPageResults() {
-        // We append pagination options to our url here
         const finalUrl = this.fetchUrl + '?page=' + this.state.currentPage + '&size=' + this.state.resultsPerPage;
         fetch(finalUrl, {
             method: 'GET',
@@ -177,7 +163,7 @@ class TrainersSearch extends Component {
                     });
                     console.log(this.state.searchResults);
                 })
-            } else { // we reset results. We don't want to keep the previous results on the screen
+            } else { 
                 this.setState({
                     currentPage: 0,
                     searchResults: [],
@@ -189,8 +175,6 @@ class TrainersSearch extends Component {
         }).catch(error => console.error('Error:', error));
     }
 
-    // validates given input string against the list or areas in db (case insensitive)
-    // returns the corresponding area id if valid, -1 otherwise
     validateInputArea() {
         let areaNamesList = this.state.areas.map((area, index) => {
             return area.city.toLowerCase();
@@ -208,8 +192,6 @@ class TrainersSearch extends Component {
         return (
             <div style={{ minHeight: '70vh' }}>
                 <div className="container my-4 py-5 mx-auto col-8">
-
-                    {/* // datalist implementation */}
                     <form className="form-inline row justify-content-between" onSubmit={this.handleSearch}>
                         <input list="areas" className="form-control form-control-lg mr-0 col-sm-5 custom-form" placeholder="&#8597; Choose area" ref={this.inputArea} />
                         <datalist id="areas">
@@ -239,5 +221,4 @@ class TrainersSearch extends Component {
 
 }
 
-// We only want logged in users to be able to search for trainers
 export default withAuthorization(TrainersSearch, [Role.Guest, Role.User], true);
